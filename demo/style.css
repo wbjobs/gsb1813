@@ -1,0 +1,4 @@
+body { font-family: system-ui, sans-serif; margin: 2rem; background: #f6f7f9; }
+.panel { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+button { margin: .25rem; padding: .5rem 1rem; cursor: pointer; }
+pre { white-space: pre-wrap; word-break: break-all; background: #f0f0f0; padding: .5rem; border-radius: 4px; }

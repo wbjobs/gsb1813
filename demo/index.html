@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>CSP 自动生成演示</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <h1>CSP 自动生成 / 报告 / 收紧 演示</h1>
+  <div class="panel">
+    <button id="btn-generate">1. 生成 CSP</button>
+    <button id="btn-apply">2. 灰度（Report-Only）</button>
+    <button id="btn-tighten">3. 收紧策略</button>
+    <button id="btn-export-json">导出报告 JSON</button>
+    <button id="btn-export-csv">导出报告 CSV</button>
+  </div>
+  <div class="panel">
+    <h2>状态</h2>
+    <pre id="status">初始化中…</pre>
+  </div>
+  <div class="panel">
+    <h2>生成的策略</h2>
+    <pre id="policy">（尚未生成）</pre>
+  </div>
+  <img src="./pixel.svg" alt="demo" width="32" height="32">
+  <script src="./app.js" type="module"></script>
+</body>
+</html>

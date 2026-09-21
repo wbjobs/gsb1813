@@ -1,0 +1,10 @@
+{
+  "name": "csp-autogen",
+  "version": "1.0.0",
+  "description": "根据页面资源自动生成 CSP：收集、生成、报告、收紧（PerformanceObserver + CSP + Web Worker）",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "start": "node server.js"
+  }
+}
