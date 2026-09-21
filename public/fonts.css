@@ -1,0 +1,5 @@
+/* 字体源（8126）上的样式 */
+@font-face {
+  font-family: "CspDummy";
+  src: url("/assets/dummy.woff2") format("woff2");
+}

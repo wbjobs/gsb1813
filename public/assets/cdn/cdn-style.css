@@ -1,0 +1,3 @@
+/* 模拟 CDN 样式表，内部 @import 另一个源的字体样式 */
+@import url("http://127.0.0.1:8126/fonts.css");
+.cdn-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; background: rgba(79,140,255,.2); color: #4f8cff; font-size: 12px; }

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSP 自动生成控制台 · 资源收集 / 报告 / 收紧</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/assets/manifest.webmanifest">
+  <link rel="stylesheet" href="http://127.0.0.1:8125/cdn/cdn-style.css">
+  <script src="http://127.0.0.1:8125/cdn/third-party.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>🛡️ CSP 自动生成控制台</h1>
+    <p class="subtitle">PerformanceObserver 收集资源 · Web Worker 生成策略 · Report-Only 报告 · dry-run 校验后收紧</p>
+    <ol class="stages">
+      <li class="stage-dot">① 收集资源</li>
+      <li class="stage-dot">② 报告策略(Report-Only)</li>
+      <li class="stage-dot">③ 收紧</li>
+      <li class="stage-dot">④ 强制生效</li>
+    </ol>
+  </header>
+
+  <div class="demo-strip">
+    <span class="cdn-badge">跨源演示资源（端口 8125/8126 模拟第三方源）：</span>
+    <img src="http://127.0.0.1:8125/assets/logo.svg" alt="cdn logo" width="70" height="24">
+    <iframe src="http://127.0.0.1:8125/cdn/frame.html" width="260" height="48" title="frame demo"></iframe>
+  </div>
+  <main class="layout">
+    <section class="panel panel-controls">
+      <h2>操作</h2>
+      <div class="btn-grid">
+        <button id="btnStart" class="primary">① 开始收集</button>
+        <button id="btnRegen">重新生成报告策略</button>
+        <button id="btnTighten" class="primary">③ 收紧策略</button>
+        <button id="btnEnforceMeta">④ Meta 即时强制</button>
+        <button id="btnEnforceHeader" class="primary">④ 服务端头强制（刷新验证）</button>
+        <button id="btnReportOnly">切回 Report-Only</button>
+        <button id="btnExportReport" class="ghost">导出报告 JSON</button>
+        <button id="btnExportCsp" class="ghost">导出 CSP 头 (.txt)</button>
+      </div>
+      <h2>探针</h2>
+      <div class="btn-grid">
+        <button id="btnEvalProbe" class="warn">触发 eval</button>
+        <button id="btnBlockProbe" class="warn">加载未授权源脚本</button>
+        <button id="btnStress" class="ghost">性能压测 2000 资源</button>
+      </div>
+      <h2>性能</h2>
+      <table class="metrics">
+        <tr><td>最近批量构建</td><td id="metricBuild" class="metric-value">0 ms</td></tr>
+        <tr><td>Performance 事件</td><td id="metricEvents" class="metric-value">0</td></tr>
+        <tr><td>去重后资源数</td><td id="metricTotal" class="metric-value">0</td></tr>
+        <tr><td>批量次数</td><td id="metricBatches" class="metric-value">0</td></tr>
+        <tr><td>Worker 异常</td><td id="metricWorkerErrors" class="metric-value">0</td></tr>
+      </table>
+      <p class="muted small">批量构建阈值 50ms；2000 资源压测阈值 500ms。超时/异常会在右上角提示。</p>
+    </section>
+
+    <section class="panel panel-main">
+      <h2>报告策略（Content-Security-Policy-Report-Only）</h2>
+      <pre id="reportPolicy" class="policy">（尚未生成）</pre>
+
+      <h2>收紧后策略（Content-Security-Policy）</h2>
+      <pre id="tightPolicy" class="policy">（尚未收紧）</pre>
+
+      <h2>收紧变更明细</h2>
+      <table id="diffTable" class="data">
+        <thead><tr><th>指令</th><th>动作</th><th>来源</th><th>原因</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="tightenWarnings" class="warnings muted">无风险项</div>
+
+      <h2>指令明细</h2>
+      <table id="directivesTable" class="data">
+        <thead><tr><th>指令</th><th>允许来源</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <h2>违规记录（dry-run 与浏览器真实上报）</h2>
+      <table id="violationsTable" class="data">
+        <thead><tr><th>来源</th><th>指令</th><th>被阻止资源</th><th>原因/位置</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <h2>内联 / eval 风险</h2>
+      <div id="flagsBox" class="warnings muted">未发现内联/eval 风险</div>
+      <h2>被忽略/无法归类的资源</h2>
+      <div id="ignoredBox" class="warnings muted">无</div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast-box"></div>
+  <script>
+    // 1.5s 后动态插入跨源追踪脚本，用于验证 MutationObserver/PerformanceObserver 对动态资源的收集
+    setTimeout(function () {
+      var s = document.createElement('script');
+      s.src = 'http://127.0.0.1:8125/cdn/late-track.js';
+      document.head.appendChild(s);
+    }, 1500);
+  </script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "CSP Lab",
+  "short_name": "CSP",
+  "icons": [{ "src": "/assets/logo.svg", "type": "image/svg+xml", "sizes": "any" }],
+  "start_url": "/",
+  "display": "standalone"
+}
